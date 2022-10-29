@@ -1,0 +1,418 @@
+@use 'sass:math';
+@import 'fonts';
+
+// px to rem  font-size: rem(16);
+@function rem($px) {
+  $result: math.div($px, 16) + rem;
+  @return $result;
+}
+
+/*================================================================= */
+// px to em  font-size: em(16);
+@function em($px) {
+  $result: math.div($px, 18) + em;
+  @return $result;
+}
+/*================================================================= */
+
+// Подключение шрифтов =======================================================
+// &display=swap - добавить при подключениее через плагин
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic&display=swap);
+
+// Шрифты по умолчанию =======================================================
+$fontFamily: 'Roboto';
+$fontSize: rem(14);
+
+// Основные цвета =============================================================
+$headerDark: #2f2f2f;
+$headerLiteDark: #3a3a3a;
+$footerDark: #272727;
+
+$mainFontColor: #000; // Цвет шрифта по умолчанию
+$greenColor: #52ad3a;
+$greenLiteColor: #6fca4e;
+
+// Адаптивное свойство
+$minWidth: 320; // Минимальная ширина страницы
+$maxWidth: 1920; // Ширина полотна (макета)
+$maxWidthContainer: 1500; // Ширина ограничивающего контейнера (0 = нет ограничения)
+$containerPadding: 60; // Общий отступ у контейнера (30 = по 15рх слева и справа, 0 = нет отступа)
+$containerWidth: $maxWidthContainer + $containerPadding; // Ширина срабатывания первого брейк-поинта
+
+// Брейн-поинты
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobile: em(767.98); // Телефоны L
+$mobileSmall: em(479.98); // Телефоны S
+
+// Тип адаптива: 1 = отзывчивый (у контейнера нетбрейк-поинтов), 2 = по брейк-поинтам (контейнер имеет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+
+/*
+(i) Стили будут применятьсяя ко всем классам содержащим *__container
+Например header__container, main__container и т.д.
+Спипет (HTML): cnt
+*/
+@if ($responsiveType==1) {
+  // Отзвычивая
+  [class*='__container'] {
+    @if ($maxWidthContainer>0) {
+      max-width: rem($maxWidthContainer);
+      box-sizing: content-box;
+      margin: 0 auto;
+    }
+    @if ($containerPadding>0) {
+      padding: 0 rem(math.div($containerPadding, 2));
+    }
+  }
+} @else {
+  // По брейк-поинтам
+  [class*='__container'] {
+    margin: 0 auto;
+    @if ($maxWidthContainer>0) {
+      max-width: rem($maxWidthContainer);
+      box-sizing: content-box;
+    } @else {
+      @if ($containerPadding>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+    @media (max-width: $pc) {
+      max-width: rem(970);
+    }
+    @media (max-width: $tablet) {
+      max-width: rem(750);
+    }
+    @media (max-width: $mobile) {
+      max-width: none;
+      @if ($containerPadding>0 and $maxWidthContainer>0) {
+        padding: 0 rem(math.div($containerPadding, 2));
+      }
+    }
+  }
+}
+
+// Адаптивное значение
+@mixin adaptiveValue($property, $staartSize, $minSize, $type) {
+  $addSize: $staartSize - $minSize;
+  @if $type==1 {
+    // Только если меньше контейнера
+    #{$property}: $staartSize + px;
+    @media (max-width: #{$maxWidthContainer + px}) {
+      #{$property}: calc(
+        #{$minSize + px} + #{$addSize} *
+          ((100vw - #{$minWidth + px}) / #{$maxWidthContainer - $minWidth})
+      );
+    }
+  } @else if $type==2 {
+    // Только если больше контейнера
+    #{$property}: $staartSize + px;
+    @media (min-width: #{$maxWidthContainer + px}) {
+      #{$property}: calc(
+        #{$minSize + px} + #{$addSize} * ((100vw - #{$minWidth + px}) / #{$maxWidth - $minWidth})
+      );
+    }
+  } @else {
+    // Всегда
+    #{$property}: calc(
+      #{$minSize + px} + #{$addSize} * ((100vw - #{$minWidth + px}) / #{$maxWidth - $minWidth})
+    );
+  }
+}
+/*========================== Пример использования ================
+.block__body {
+  @include adaptive-value("padding", 50, 20, 0);
+}
+================================================================= */
+
+// Адаптивный шрифт
+@mixin adaptiveFont($pcSize, $mobSize) {
+  $addSize: $pcSize - $mobSize;
+  $addMobSize: $addSize + $addSize * 0.7;
+  @media (max-width: 768px) {
+    font-size: calc(#{$mobSize + px} + #{$addMobSize} * ((100vw - 320 px) / #{$maxWidth}));
+  }
+  @media (min-width: 767px) {
+    font-size: calc(#{$mobSize + px} + #{$addSize} * (100vw / #{$maxWidth}));
+  }
+}
+/*========================== Пример использования ================
+.block__body {
+  @include aadaptiveFont(40, 20); 
+}
+================================================================= */
+
+// Обнуление
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+ul,
+ol,
+li {
+  list-style-type: none;
+}
+img {
+  vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: inherit;
+  font-size: inherit;
+}
+html,
+body {
+  height: 100%;
+  color: $mainFontColor;
+}
+body {
+  font-size: $fontSize;
+  font-weight: 400;
+  font-family: $fontFamily, sans-serif;
+  font-style: normal;
+}
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex: 1 1 auto;
+}
+.ibg {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+
+  img {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ================================================================= */
+// =========== Header ==============
+.header {
+  &__top {
+    background-color: $headerDark;
+    padding-top: rem(7);
+    padding-bottom: rem(7);
+    .header__layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+  }
+
+  &__left {
+    height: 100%;
+  }
+
+  &__right {
+    height: 100%;
+  }
+
+  &__social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  &__bottom {
+    background-color: $headerLiteDark;
+    .header__layout {
+      height: rem(100);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @include adaptiveValue('gap', 40, 10, 1);
+    }
+  }
+
+  &__input {
+    flex: 1 1 auto;
+
+    input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    @include adaptiveValue('gap', 24, 10, 1);
+  }
+
+  &__logo {
+    display: flex;
+    height: rem(50);
+    width: rem(150);
+    a {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+.menu {
+  &__list {
+    display: flex;
+    @include adaptiveValue('gap', 15, 10, 1);
+  }
+
+  &__link {
+    display: inline-block;
+    color: #f8f8f8;
+    font-size: 12px;
+    transition: color ease-in-out 0.2s;
+
+    &:hover {
+      color: $greenColor;
+    }
+  }
+}
+.social {
+  &__link {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    path {
+      transition: fill ease-in-out 0.2s;
+    }
+
+    &:hover path {
+      fill: $greenLiteColor;
+    }
+  }
+}
+
+.actions {
+  white-space: nowrap;
+
+  a {
+    color: #fff;
+    line-height: 1;
+    transition: color ease-in-out 0.2s;
+
+    &:hover {
+      color: $greenColor;
+    }
+  }
+
+  &__contscts {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+  }
+
+  &__phones-list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+    font-size: 16px;
+  }
+
+  &__phones-text {
+    font-size: 12px;
+  }
+
+  &__cart {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    @include adaptiveValue('gap', 12, 5, 1);
+  }
+}
+.phones-list {
+  &__item {
+    font-size: 17px;
+  }
+}
+.cart {
+  &:hover &__title {
+    color: $greenLiteColor;
+    transition: color ease-in-out 0.2s;
+  }
+
+  path {
+    transition: fill ease-in-out 0.2s;
+  }
+
+  &:hover path {
+    fill: $greenLiteColor;
+    transition: fill ease-in-out 0.2s;
+  }
+
+  &__icon {
+    position: relative;
+    width: rem(37);
+    height: rem(37);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &::before {
+      content: '0';
+      position: absolute;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 700;
+      font-style: italic;
+      top: rem(4);
+      left: rem(17);
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: rem(4);
+  }
+
+  &__title {
+    color: $greenColor;
+    font-size: 17px;
+    font-weight: 700;
+    transition: color ease-in-out 0.2s;
+  }
+
+  &__price {
+    font-size: 14px;
+    color: #fff;
+  }
+}
+
+// =================================================
+
+
+
+
+// ===== Footer ==========
+.footer {
+  background-color: $footerDark;
+  @include adaptiveValue("padding-top", 30, 10, 1);
+  @include adaptiveValue("padding-bottom", 60, 10, 1);
+  color: #efefef;
+}
