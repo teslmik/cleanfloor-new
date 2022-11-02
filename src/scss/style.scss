@@ -1,6 +1,47 @@
 @use 'sass:math';
 @import 'fonts';
 
+// =============== Icon Fonts css  ================
+
+[class^='_icon-']::before,
+[class*=' _icon-']::before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+._icon-cart:before {
+  content: '\e906';
+}
+._icon-fb:before {
+  content: '\e900';
+}
+._icon-instagram:before {
+  content: '\e901';
+}
+._icon-phone:before {
+  content: '\e902';
+}
+._icon-viber:before {
+  content: '\e903';
+}
+._icon-mail:before {
+  content: '\e904';
+}
+._icon-location:before {
+  content: '\e905';
+}
+
+// ============================================================
+
 // px to rem  font-size: rem(16);
 @function rem($px) {
   $result: math.div($px, 16) + rem;
@@ -234,7 +275,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
   }
 
   &__bottom {
@@ -290,37 +331,32 @@ body {
     transition: color ease-in-out 0.2s;
 
     &:hover {
-      color: $greenColor;
+      color: $greenLiteColor;
     }
   }
 }
 .social {
+  span {
+    color: #fff;
+  }
+
   &__link {
     height: 100%;
     display: flex;
     align-items: center;
-    path {
-      transition: fill ease-in-out 0.2s;
-    }
+    color: $greenColor;
+    font-size: 26px;
+    transition: color ease-in-out 0.2s;
+    margin: -5px 0;
 
-    &:hover path {
-      fill: $greenLiteColor;
+    &:hover {
+      color: $greenLiteColor;
     }
   }
 }
 
 .actions {
   white-space: nowrap;
-
-  a {
-    color: #fff;
-    line-height: 1;
-    transition: color ease-in-out 0.2s;
-
-    &:hover {
-      color: $greenColor;
-    }
-  }
 
   &__contscts {
     display: flex;
@@ -336,6 +372,16 @@ body {
   }
 
   &__phones-text {
+    a {
+      color: #fff;
+      line-height: 1;
+      transition: color ease-in-out 0.2s;
+      padding-left: 22px;
+
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
     font-size: 12px;
   }
 
@@ -349,21 +395,40 @@ body {
 .phones-list {
   &__item {
     font-size: 17px;
+    position: relative;
+    color: #ccc;
+
+    a {
+      color: #fff;
+      line-height: 1;
+      transition: color ease-in-out 0.2s;
+      padding-left: 22px;
+
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
+
+    ._icon-phone:before,
+    ._icon-viber:before {
+      position: absolute;
+      color: #ccc;
+      left: 0;
+      top: 50%;
+      transition: color ease-in-out 0.2s;
+      transform: translateY(-8px);
+    }
+
+    a:hover._icon-phone::before,
+    a:hover._icon-viber::before {
+      color: $greenLiteColor;
+    }
   }
 }
 .cart {
-  &:hover &__title {
+  &:hover &__title,
+  &:hover &__icon {
     color: $greenLiteColor;
-    transition: color ease-in-out 0.2s;
-  }
-
-  path {
-    transition: fill ease-in-out 0.2s;
-  }
-
-  &:hover path {
-    fill: $greenLiteColor;
-    transition: fill ease-in-out 0.2s;
   }
 
   &__icon {
@@ -373,15 +438,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    &::before {
-      content: '0';
+    color: $greenColor;
+    font-size: 36px;
+    transition: color ease-in-out 0.2s;
+    p {
       position: absolute;
       font-size: 14px;
       color: #fff;
       font-weight: 700;
       font-style: italic;
       top: rem(4);
-      left: rem(17);
+      right: 0;
+      text-align: center;
+      width: 90%;
     }
   }
 
@@ -401,18 +470,16 @@ body {
   &__price {
     font-size: 14px;
     color: #fff;
+    text-align: right;
   }
 }
 
 // =================================================
 
-
-
-
 // ===== Footer ==========
 .footer {
   background-color: $footerDark;
-  @include adaptiveValue("padding-top", 30, 10, 1);
-  @include adaptiveValue("padding-bottom", 60, 10, 1);
+  @include adaptiveValue('padding-top', 30, 10, 1);
+  @include adaptiveValue('padding-bottom', 60, 10, 1);
   color: #efefef;
 }

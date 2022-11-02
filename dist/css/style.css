@@ -1,7 +1,56 @@
 @charset "UTF-8";
-/*================================================================= */
-/*================================================================= */
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic&display=swap);
+@font-face {
+  font-family: icons;
+  font-display: swap;
+  src: url("../fonts/icons.woff2") format("woff2"), url("../fonts/icons.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+[class^=_icon-]::before,
+[class*=" _icon-"]::before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icons" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+._icon-cart:before {
+  content: "\e906";
+}
+
+._icon-fb:before {
+  content: "\e900";
+}
+
+._icon-instagram:before {
+  content: "\e901";
+}
+
+._icon-phone:before {
+  content: "\e902";
+}
+
+._icon-viber:before {
+  content: "\e903";
+}
+
+._icon-mail:before {
+  content: "\e904";
+}
+
+._icon-location:before {
+  content: "\e905";
+}
+
+/*================================================================= */
+/*================================================================= */
 /*
 (i) Стили будут применятьсяя ко всем классам содержащим *__container
 Например header__container, main__container и т.д.
@@ -118,7 +167,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
 }
 .header__bottom {
   background-color: #3a3a3a;
@@ -191,31 +240,27 @@ body {
   transition: color ease-in-out 0.2s;
 }
 .menu__link:hover {
-  color: #52ad3a;
+  color: #6fca4e;
 }
 
+.social span {
+  color: #fff;
+}
 .social__link {
   height: 100%;
   display: flex;
   align-items: center;
+  color: #52ad3a;
+  font-size: 26px;
+  transition: color ease-in-out 0.2s;
+  margin: -5px 0;
 }
-.social__link path {
-  transition: fill ease-in-out 0.2s;
-}
-.social__link:hover path {
-  fill: #6fca4e;
+.social__link:hover {
+  color: #6fca4e;
 }
 
 .actions {
   white-space: nowrap;
-}
-.actions a {
-  color: #fff;
-  line-height: 1;
-  transition: color ease-in-out 0.2s;
-}
-.actions a:hover {
-  color: #52ad3a;
 }
 .actions__contscts {
   display: flex;
@@ -230,6 +275,15 @@ body {
 }
 .actions__phones-text {
   font-size: 12px;
+}
+.actions__phones-text a {
+  color: #fff;
+  line-height: 1;
+  transition: color ease-in-out 0.2s;
+  padding-left: 22px;
+}
+.actions__phones-text a:hover {
+  color: #6fca4e;
 }
 .actions__cart {
   cursor: pointer;
@@ -248,18 +302,34 @@ body {
 
 .phones-list__item {
   font-size: 17px;
+  position: relative;
+  color: #ccc;
+}
+.phones-list__item a {
+  color: #fff;
+  line-height: 1;
+  transition: color ease-in-out 0.2s;
+  padding-left: 22px;
+}
+.phones-list__item a:hover {
+  color: #6fca4e;
+}
+.phones-list__item ._icon-phone:before,
+.phones-list__item ._icon-viber:before {
+  position: absolute;
+  color: #ccc;
+  left: 0;
+  top: 50%;
+  transition: color ease-in-out 0.2s;
+  transform: translateY(-8px);
+}
+.phones-list__item a:hover._icon-phone::before,
+.phones-list__item a:hover._icon-viber::before {
+  color: #6fca4e;
 }
 
-.cart:hover .cart__title {
+.cart:hover .cart__title, .cart:hover .cart__icon {
   color: #6fca4e;
-  transition: color ease-in-out 0.2s;
-}
-.cart path {
-  transition: fill ease-in-out 0.2s;
-}
-.cart:hover path {
-  fill: #6fca4e;
-  transition: fill ease-in-out 0.2s;
 }
 .cart__icon {
   position: relative;
@@ -268,16 +338,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #52ad3a;
+  font-size: 36px;
+  transition: color ease-in-out 0.2s;
 }
-.cart__icon::before {
-  content: "0";
+.cart__icon p {
   position: absolute;
   font-size: 14px;
   color: #fff;
   font-weight: 700;
   font-style: italic;
   top: 0.25rem;
-  left: 1.0625rem;
+  right: 0;
+  text-align: center;
+  width: 90%;
 }
 .cart__text {
   display: flex;
@@ -293,6 +367,7 @@ body {
 .cart__price {
   font-size: 14px;
   color: #fff;
+  text-align: right;
 }
 
 .footer {
