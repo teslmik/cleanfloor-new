@@ -1,6 +1,50 @@
 @use 'sass:math';
 @import 'fonts';
 
+// =============== Icon Fonts css  ================
+
+[class^='_icon-']::before,
+[class*=' _icon-']::before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+._icon-arrow:before {
+  content: '\e909';
+}
+._icon-cart:before {
+  content: '\e906';
+}
+._icon-fb:before {
+  content: '\e900';
+}
+._icon-instagram:before {
+  content: '\e901';
+}
+._icon-phone:before {
+  content: '\e902';
+}
+._icon-viber:before {
+  content: '\e903';
+}
+._icon-mail:before {
+  content: '\e904';
+}
+._icon-location:before {
+  content: '\e905';
+}
+
+// ============================================================
+
 // px to rem  font-size: rem(16);
 @function rem($px) {
   $result: math.div($px, 16) + rem;
@@ -153,6 +197,8 @@ $responsiveType: 1;
 }
 a {
   text-decoration: none;
+  color: #fff;
+  transition: color ease-in-out 0.2s;
 }
 ul,
 ol,
@@ -207,6 +253,31 @@ body {
   }
 }
 
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  span {
+    color: #fff;
+  }
+
+  &__link {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: $greenColor;
+    font-size: 26px;
+    transition: color ease-in-out 0.2s;
+    margin: -5px 0;
+
+    &:hover {
+      color: $greenLiteColor;
+    }
+  }
+}
+
 /* ================================================================= */
 // =========== Header ==============
 .header {
@@ -228,13 +299,6 @@ body {
 
   &__right {
     height: 100%;
-  }
-
-  &__social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
   }
 
   &__bottom {
@@ -290,21 +354,7 @@ body {
     transition: color ease-in-out 0.2s;
 
     &:hover {
-      color: $greenColor;
-    }
-  }
-}
-.social {
-  &__link {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    path {
-      transition: fill ease-in-out 0.2s;
-    }
-
-    &:hover path {
-      fill: $greenLiteColor;
+      color: $greenLiteColor;
     }
   }
 }
@@ -312,17 +362,7 @@ body {
 .actions {
   white-space: nowrap;
 
-  a {
-    color: #fff;
-    line-height: 1;
-    transition: color ease-in-out 0.2s;
-
-    &:hover {
-      color: $greenColor;
-    }
-  }
-
-  &__contscts {
+  &__contacts {
     display: flex;
     flex-direction: column;
     gap: rem(6);
@@ -336,6 +376,16 @@ body {
   }
 
   &__phones-text {
+    a {
+      color: #fff;
+      line-height: 1;
+      transition: color ease-in-out 0.2s;
+      padding-left: 22px;
+
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
     font-size: 12px;
   }
 
@@ -349,21 +399,39 @@ body {
 .phones-list {
   &__item {
     font-size: 17px;
+    position: relative;
+    color: #ccc;
+
+    a {
+      color: #fff;
+      line-height: 1;
+      padding-left: 22px;
+
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
+
+    ._icon-phone:before,
+    ._icon-viber:before {
+      position: absolute;
+      color: #ccc;
+      left: 0;
+      top: 50%;
+      transition: color ease-in-out 0.2s;
+      transform: translateY(-8px);
+    }
+
+    a:hover._icon-phone::before,
+    a:hover._icon-viber::before {
+      color: $greenLiteColor;
+    }
   }
 }
 .cart {
-  &:hover &__title {
+  &:hover &__title,
+  &:hover &__icon {
     color: $greenLiteColor;
-    transition: color ease-in-out 0.2s;
-  }
-
-  path {
-    transition: fill ease-in-out 0.2s;
-  }
-
-  &:hover path {
-    fill: $greenLiteColor;
-    transition: fill ease-in-out 0.2s;
   }
 
   &__icon {
@@ -373,15 +441,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    &::before {
-      content: '0';
+    color: $greenColor;
+    font-size: 36px;
+    transition: color ease-in-out 0.2s;
+    p {
       position: absolute;
       font-size: 14px;
       color: #fff;
       font-weight: 700;
       font-style: italic;
       top: rem(4);
-      left: rem(17);
+      right: 0;
+      text-align: center;
+      width: 90%;
     }
   }
 
@@ -401,18 +473,229 @@ body {
   &__price {
     font-size: 14px;
     color: #fff;
+    text-align: right;
   }
 }
 
 // =================================================
 
-
-
-
 // ===== Footer ==========
 .footer {
   background-color: $footerDark;
-  @include adaptiveValue("padding-top", 30, 10, 1);
-  @include adaptiveValue("padding-bottom", 60, 10, 1);
+  @include adaptiveValue('padding-top', 30, 10, 1);
+  @include adaptiveValue('padding-bottom', 60, 10, 1);
   color: #efefef;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__layout {
+    display: grid;
+    gap: rem(30);
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    margin-bottom: rem(20);
+  }
+
+  .copyright {
+    display: flex;
+    flex-direction: column;
+    gap: rem(25);
+    &__logo {
+      height: rem(40);
+      width: 100%;
+      background-position: left;
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+      gap: rem(15);
+      a:hover {
+        color: $greenLiteColor;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    @include adaptiveFont(13, 10);
+  }
+
+  &__link {
+    &:not(:last-child) {
+      @include adaptiveValue('margin-bottom', 8, 5, 1);
+    }
+
+    &:hover {
+      color: $greenLiteColor;
+    }
+  }
+
+  .contacts-footer {
+    &__block {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      a {
+        position: relative;
+        padding-left: 22px;
+        &:not(:last-child) {
+          @include adaptiveValue('margin-bottom', 30, 20, 1);
+        }
+
+        &:hover {
+          color: $greenLiteColor;
+        }
+      }
+      ._icon-mail::before {
+        position: absolute;
+        color: #ccc;
+        left: 0;
+        transition: color ease-in-out 0.2s;
+      }
+      a:hover._icon-mail::before {
+        color: $greenLiteColor;
+      }
+    }
+
+    &__location {
+      display: flex;
+      flex-direction: column;
+      gap: rem(8);
+      position: relative;
+      padding-left: 22px;
+      a {
+        padding-left: 0;
+      }
+    }
+
+    ._icon-location::before {
+      position: absolute;
+      color: #ccc;
+      left: 0;
+      transition: color ease-in-out 0.2s;
+    }
+  }
+}
+
+.title-footer {
+  font-size: 14px;
+  font-weight: bold;
+  color: $greenColor;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.footer-actions.actions__contacts {
+  gap: rem(11);
+  .phones-list__item {
+    font-size: 13px;
+  }
+  .phones-list {
+    gap: rem(11);
+  }
+  ._icon-phone::before,
+  ._icon-viber::before {
+    font-size: 16px;
+  }
+}
+
+.social-block {
+  display: inline-flex;
+  flex-direction: column;
+  gap: rem(10);
+
+  .social-icon {
+    display: flex;
+    gap: rem(10);
+  }
+  ._icon-fb,
+  ._icon-instagram {
+    color: #efefef80;
+
+    &:hover {
+      color: #efefefb3;
+    }
+  }
+}
+
+.page-up {
+  position: fixed;
+  right: 0px;
+  z-index: 999;
+
+  .upButton-btn {
+    border-radius: 4px;
+    color: #363636;
+    border: 1px solid #7e7e7e;
+    background: #fff;
+    box-shadow: none;
+    position: relative;
+    display: block;
+    -webkit-transition: all 0.15s;
+    -o-transition: all 0.15s;
+    transition: all 0.15s;
+    cursor: pointer;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+
+    span {
+      position: absolute;
+      left: -75px;
+      top: 50%;
+      font-family: sans-serif;
+      font-size: 12px;
+      margin-top: -12px;
+      line-height: 26px;
+      background: #333;
+      border-radius: 4px;
+      color: #fff;
+      padding: 0 12px;
+      text-align: center;
+      -webkit-transition: opacity 0.15s;
+      -o-transition: opacity 0.15s;
+      transition: opacity 0.15s;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      opacity: 0;
+
+      &::before {
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        margin-top: -4px;
+        content: '';
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 4px solid #333;
+      }
+    }
+  }
+
+  a._icon-arrow {
+    position: absolute;
+    top: 16px;
+    left: -70px;
+    font-size: 38px;
+    padding: rem(1);
+  }
+
+  a:hover,
+  a:focus {
+    background: #fff;
+    border-color: #363636;
+    color: #363636;
+  }
+
+  a:hover span {
+    opacity: 1;
+  }
 }
