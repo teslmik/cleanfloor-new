@@ -6,7 +6,7 @@
 
 "use strict";
 
-export function DynamicAdapt(type) {
+function DynamicAdapt(type) {
 	this.type = type;
 }
 
@@ -157,5 +157,7 @@ DynamicAdapt.prototype.arraySort = function (arr) {
 	}
 };
 
-const da = new DynamicAdapt("max");
-da.init();
+export const da = new DynamicAdapt("max");
+// da.init();
+
+export default DynamicAdapt;
