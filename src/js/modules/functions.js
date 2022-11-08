@@ -36,9 +36,9 @@ ibg();
 /* ================================================================== */
 /* Слайдер Swiper */
 
-import Swiper, { Autoplay, Navigation, Pagination } from 'swiper';
+import Swiper, { Autoplay, EffectFade, Navigation, Pagination } from 'swiper';
 
-Swiper.use([Navigation, Pagination, Autoplay]);
+Swiper.use([Navigation, Pagination, Autoplay, EffectFade]);
 
 export const swiper = new Swiper('.swiper', {
 
@@ -47,6 +47,7 @@ export const swiper = new Swiper('.swiper', {
     disableOnInteraction: false,
   },
 
+  slidesPerView: 1,
   direction: 'horizontal',
   loop: true,
   effect: 'fade',

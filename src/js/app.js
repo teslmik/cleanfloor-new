@@ -3,4 +3,3 @@ import { da } from './modules/dynamicAdapt.js';
 
 flsFunction.isWebp();
 da.init();
-

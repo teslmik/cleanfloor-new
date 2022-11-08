@@ -7,10 +7,11 @@
 
 // =============== Icon Fonts css  ================
 
-[class^='_icon-']::before,
-[class*=' _icon-']::before {
+[class^='_icon-']:before,
+[class*=' _icon-']:before {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icons' !important;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -22,8 +23,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-._icon-arrow:before {
+._icon-accessories:before {
+  content: '\e907';
+}
+._icon-extractor:before {
+  content: '\e908';
+}
+._icon-one-disk-machines:before {
   content: '\e909';
+}
+._icon-scrubber:before {
+  content: '\e90a';
+}
+._icon-sweeping-machines:before {
+  content: '\e90b';
+}
+._icon-vacuum-cleaner:before {
+  content: '\e90c';
+}
+._icon-air-fan:before {
+  content: '\e90d';
 }
 ._icon-cart:before {
   content: '\e906';
@@ -79,6 +98,7 @@ $footerDark: #272727;
 $mainFontColor: #000; // Цвет шрифта по умолчанию
 $greenColor: #52ad3a;
 $greenLiteColor: #6fca4e;
+$greyColor: #acacac;
 
 // Адаптивное свойство
 $minWidth: 320; // Минимальная ширина страницы
@@ -495,7 +515,7 @@ body {
 
 // =================================================
 // ===== Main ==========
-
+// ----- Slider-Swiper ------
 .swiper {
   &__img {
     text-align: center;
@@ -536,6 +556,359 @@ body {
     }
   }
 }
+// ----- section-promo --------------------------------
+.promo {
+  &__container {
+    @include adaptiveValue('margin-top', 40, 20, 1);
+    @include adaptiveValue('margin-bottom', 40, 20, 1);
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__tabs {
+    margin-bottom: 25px;
+  }
+
+  &__catalog {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+.tabs {
+  &__list {
+    display: flex;
+    @include adaptiveValue('gap', 36, 20, 1);
+  }
+
+  &__item {
+  }
+
+  &__link {
+    color: #3d3d3d;
+    font-size: 20px;
+    font-weight: bold;
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
+  }
+
+  &__link._action {
+    color: $greenLiteColor;
+  }
+}
+.catalog {
+  &__items {
+    @include adaptiveValue('padding', 15, 10, 1);
+    transition: all 0.2s ease-in-out;
+    max-width: 260px;
+
+    @media (any-hover: hover) {
+      &:hover {
+        border-radius: 4px;
+        box-shadow: 0 7px 15px rgb(59 55 43 / 25%);
+        .card__image {
+          transform: scale(103%);
+        }
+      }
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.card {
+  &__label {
+    position: absolute;
+  }
+
+  &__image {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 250px;
+    @include adaptiveValue('margin-bottom', 15, 10, 1);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
+  }
+
+  &__article {
+    color: $greyColor;
+    font-size: 11px;
+    margin-bottom: rem(4);
+  }
+
+  &__title {
+    height: rem(38);
+    color: #333;
+    font-size: 15px;
+    margin-bottom: rem(10);
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    @media (any-hover: hover) {
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
+  }
+
+  &__cost {
+    display: flex;
+    gap: rem(15);
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__old-price {
+    line-height: 0.8;
+    color: $greyColor;
+    text-decoration: line-through;
+  }
+
+  &__actual-price {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  &__btn {
+    cursor: pointer;
+    padding: 0 rem(10);
+    display: flex;
+    align-items: center;
+    color: #fff;
+    border-radius: 4px;
+    background-color: $greenColor;
+    font-size: 15px;
+    font-weight: 700;
+    height: 26px;
+    line-height: 0;
+    transition: background-color 0.2s ease-in-out;
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: $greenLiteColor;
+      }
+    }
+  }
+}
+
+// ----- categories-block --------------------------------
+.categories-block {
+  &__container {
+    @include adaptiveValue('margin-top', 40, 20, 1);
+    @include adaptiveValue('margin-bottom', 40, 20, 1);
+  }
+
+  &__title {
+    text-align: center;
+    @include adaptiveValue('margin-bottom', 25, 10, 1);
+    font-size: 20px;
+    font-weight: bold;
+    color: #3d3d3d;
+  }
+
+  &__items {
+    display: grid;
+    justify-content: center;
+    gap: rem(30);
+    grid-template-columns: repeat(auto-fit, minmax(auto, 130px));
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    justify-content: space-between;
+    color: #000;
+    padding: 5px;
+    transition: all 0.2s ease-in-out;
+    @media (any-hover: hover) {
+      &:hover {
+        border-radius: 4px;
+        box-shadow: 0 7px 15px rgb(59 55 43 / 25%);
+        i {
+          color: $greenLiteColor;
+        }
+      }
+    }
+
+    i {
+      color: $footerDark;
+      transition: color 0.2s ease-in-out;
+      font-size: 100px;
+      text-align: center;
+    }
+
+    p {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      flex: 1 0 auto;
+    }
+  }
+}
+
+// ----- benefits --------------------------------
+.benefits {
+  background-color: #fafafa;
+  @include adaptiveValue('margin-top', 40, 20, 1);
+  @include adaptiveValue('margin-bottom', 40, 20, 1);
+  &__container {
+    padding: 40px 0;
+  }
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    @include adaptiveValue('margin-left', 40, 0, 1);
+    @include adaptiveValue('margin-right', 40, 0, 1);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+    max-width: rem(260);
+    font-size: 16px;
+  }
+}
+
+// ----- about --------------------------------
+.about {
+  &__container {
+  }
+
+  &__block {
+    display: flex;
+    gap: rem(30);
+  }
+
+  &__content {
+    width: 66.667%;
+  }
+
+  &__blog {
+    width: 33.333%;
+  }
+}
+.content-about {
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    @include adaptiveValue('margin-bottom', 15, 10, 1);
+  }
+
+  &__text {
+    line-height: 1.6;
+    &:not(:last-child) {
+      margin-bottom: em(8.4);
+    }
+  }
+}
+.blog-about {
+  &__title {
+    display: block;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    @include adaptiveValue('margin-bottom', 15, 10, 1);
+    @media (any-hover: hover) {
+      &:hover {
+        color: $greenLiteColor;
+      }
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    @include adaptiveValue('margin-bottom', 20, 10, 1);
+  }
+
+  &__item {
+    display: flex;
+    gap: rem(20);
+  }
+
+  &__btn {
+    border: 1px solid #7e7e7e;
+    border-radius: 4px;
+    padding: rem(3) rem(12) rem(4);
+    background-color: #fff;
+    cursor: pointer;
+    color: #363636;
+    font-size: 14px;
+    transition: border-color 0.2s ease-in-out;
+    @media (any-hover: hover) {
+      &:hover {
+        border-color: #363636;
+      }
+    }
+  }
+}
+.blog-item {
+  &__img {
+    height: 80px;
+    width: 120px;
+    border-radius: 4px;
+    overflow: hidden;
+    flex: 1 0 auto;
+    &.ibg {
+      background-size: cover;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(6);
+  }
+
+  &__date {
+    color: $greyColor;
+    font-size: 11px;
+  }
+
+  &__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    line-height: 20px;
+    color: #333;
+    transition: color ease-in-out 0.2s;
+  }
+  @media (any-hover: hover) {
+    &:hover {
+      .blog-item__text {
+        color: $greenLiteColor;
+      }
+    }
+  }
+}
 
 // =================================================
 // ===== Footer ==========
@@ -544,6 +917,7 @@ body {
   background-color: $footerDark;
   @include adaptiveValue('padding-top', 30, 15, 1);
   @include adaptiveValue('padding-bottom', 60, 20, 1);
+  @include adaptiveValue('margin-top', 40, 20, 1);
   color: #efefef;
 
   &__container {
